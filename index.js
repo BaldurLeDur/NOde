@@ -35,47 +35,96 @@ app.get("/yolo/pokepo", function (req, res) {
       */
       
   });
-  app.use(bodyParser.urlencoded({ extended: true }));
-  app.get('/yolo/filter/:search', (req, res) => {
-    const dbConnect = dbo.getDb();
-    //on code ensuite l'insertion dans mongoDB, lisez la doc hehe !!
-    dbConnect.collection("pokepo").find({parti:{$in:[req.params.search]}}).toArray(function (err, result) {
-      if (err) {
-        res.status(400).send(err.message);
-      } else {
-        res.json(result);
-      }
-    });
+
+  
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+//cherche un pokepo selon les filtres indiqués
+app.get('/pokepo/filter/:search', (req, res) => {
+  const dbConnect = dbo.getDb();
+  dbConnect.collection("pokepo").find({parti:{$in:[req.params.search]}}).toArray(function (err, result) {
+    if (err) {
+      res.status(400).send(err.message);
+    } else {
+      res.json(result);
+    }
+  });
 });
-  app.use(bodyParser.urlencoded({ extended: true }));
-  app.post('/yolo/pokepo', jsonParser, (req, res) => {
-    const dbConnect = dbo.getDb();
-    const body = req.body;
-    console.log('Got body:', body);
-    //on code ensuite l'insertion dans mongoDB, lisez la doc hehe !!
-    dbConnect.collection("pokepo").insertOne(body)
-    res.json(body);
+
+//ajouter un pokemon
+app.post('/pokepo/insert', jsonParser, (req, res) => {
+  const dbConnect = dbo.getDb();
+  const body = req.body;
+  console.log('Got body:', body);
+  dbConnect.collection("pokepo").insertOne(body)
+  res.json(body);
 });
-  app.use(bodyParser.urlencoded({ extended: true }));
-  app.post('/yolo/delete', jsonParser, (req, res) => {
-    const dbConnect = dbo.getDb();
-    const body = req.body;
-    console.log('Got body:', body);
-    //on code ensuite l'insertion dans mongoDB, lisez la doc hehe !!
-    dbConnect.collection("pokepo").deleteOne(body)
-    res.json(body);
-});
-  app.use(bodyParser.urlencoded({ extended: true }));
-  app.post('/yolo/update', jsonParser, (req, res) => {
-    const dbConnect = dbo.getDb();
-    const body = req.body;
-    console.log('Got body:', body);
-    //on code ensuite l'insertion dans mongoDB, lisez la doc hehe !!
-    dbConnect.collection("pokepo").UpdateOne(body)
-    res.json(body);
+
+//supprimer un pokemon
+app.use(bodyParser.urlencoded({ extended: true }));
+app.post('/pokepo/delete', jsonParser, (req, res) => {
+  const dbConnect = dbo.getDb();
+  const body = req.body;
+  console.log('Got body:', body);
+  dbConnect.collection("pokepo").deleteOne(body)
+  res.json(body);
 });
 
 
- app.listen(port, function () {
-   console.log(`App listening on port ${port}!`);
- });
+//update le nom d'un pokemon
+app.post('/pokepo/updateName', jsonParser, (req, res) => {
+  const dbConnect = dbo.getDb();
+  const body = req.body;
+  console.log('Got body:', body);
+  dbConnect.collection("pokepo").updateOne({name:body.name}, {$set:{name:body.to}})
+  res.json(body);
+});
+
+//update le parti d'un pokemon
+app.post('/pokepo/updateParti', jsonParser, (req, res) => {
+  const dbConnect = dbo.getDb();
+  const body = req.body;
+  console.log('Got body:', body);
+  dbConnect.collection("pokepo").updateOne({name:body.name}, {$set:{parti:body.to}})
+  res.json(body);
+});
+
+
+//DANS LE POKEDEX
+
+//ajoute un pokemon au pokedex
+app.use(bodyParser.urlencoded({ extended: true}))
+app.post('/pokepo/insert', jsonParser, (req, res) => {
+  const dbConnect = dbo.getDb();
+  const body = req.body;
+  console.log('Got body:', body);
+  dbConnect.collection("polidex").insertOne(body)
+  res.json(body);
+});
+
+//supprimer un pokemon du pokedex
+app.post('/pokepo/delete', jsonParser, (req, res) => {
+  const dbConnect = dbo.getDb();
+  const body = req.body;
+  console.log('Got body:', body);
+  dbConnect.collection("polidex").deleteOne(body)
+  res.json(body);
+});
+
+//cherche un pokepo dans le polidex selon les filtres indiqués
+app.get('/pokepo/filter/:search', (req, res) => {
+  const dbConnect = dbo.getDb();
+  dbConnect.collection("polidex").find({parti:{$in:[req.params.search]}}).toArray(function (err, result) {
+    if (err) {
+      res.status(400).send(err.message);
+    } else {
+      res.json(result);
+    }
+  });
+});
+
+
+app.listen(port, function () {
+  console.log(`App listening on port ${port}!`);
+});
