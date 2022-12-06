@@ -46,9 +46,8 @@ app.get('/pokepo/filter/:search', (req, res) => {
   dbConnect.collection("pokepo").find({parti:{$in:[req.params.search]}}).toArray(function (err, result) {
     if (err) {
       res.status(400).send(err.message);
-    } else {
-      res.json(result);
     }
+    res.json(result);
   });
 });
 
@@ -62,7 +61,6 @@ app.post('/pokepo/insert', jsonParser, (req, res) => {
 });
 
 //supprimer un pokemon
-app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/pokepo/delete', jsonParser, (req, res) => {
   const dbConnect = dbo.getDb();
   const body = req.body;
@@ -94,7 +92,6 @@ app.post('/pokepo/updateParti', jsonParser, (req, res) => {
 //DANS LE POKEDEX
 
 //ajoute un pokemon au pokedex
-app.use(bodyParser.urlencoded({ extended: true}))
 app.post('/pokepo/insert', jsonParser, (req, res) => {
   const dbConnect = dbo.getDb();
   const body = req.body;
@@ -118,9 +115,8 @@ app.get('/pokepo/filter/:search', (req, res) => {
   dbConnect.collection("polidex").find({parti:{$in:[req.params.search]}}).toArray(function (err, result) {
     if (err) {
       res.status(400).send(err.message);
-    } else {
-      res.json(result);
     }
+    res.json(result);
   });
 });
 
