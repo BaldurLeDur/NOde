@@ -92,16 +92,18 @@ app.post('/pokepo/updateParti', jsonParser, (req, res) => {
 //DANS LE POKEDEX
 
 //ajoute un pokemon au pokedex
-app.post('/pokepo/insert', jsonParser, (req, res) => {
+app.post('/polidex/insert', jsonParser, (req, res) => {
   const dbConnect = dbo.getDb();
   const body = req.body;
   console.log('Got body:', body);
-  dbConnect.collection("polidex").insertOne(body)
+  toImport = dbConnect.collection("pokepo").findOne({name:body.name});
+  console.log(toImport)
+  //dbConnect.collection("polidex").insertOne(toImport)
   res.json(body);
 });
 
 //supprimer un pokemon du pokedex
-app.post('/pokepo/delete', jsonParser, (req, res) => {
+app.post('/polidex/delete', jsonParser, (req, res) => {
   const dbConnect = dbo.getDb();
   const body = req.body;
   console.log('Got body:', body);
@@ -110,7 +112,7 @@ app.post('/pokepo/delete', jsonParser, (req, res) => {
 });
 
 //cherche un pokepo dans le polidex selon les filtres indiqués
-app.get('/pokepo/filter/:search', (req, res) => {
+app.get('/polidex/filter/:search', (req, res) => {
   const dbConnect = dbo.getDb();
   dbConnect.collection("polidex").find({parti:{$in:[req.params.search]}}).toArray(function (err, result) {
     if (err) {
