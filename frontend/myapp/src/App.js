@@ -7,7 +7,8 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import Menu from "./components/Menu";
+import Everyone from './pages/Everyone';
+
 
 
 
@@ -16,13 +17,16 @@ function App(props){
   return <Router>
       <Switch>
         <Route exact path="/"> {/*ici on met l'URL dans le navigateur*/}
-          <Menu /> {/*ici on donne la page à afficher en fonction de cette URL*/}
+          <Home /> {/*ici on donne la page à afficher en fonction de cette URL*/}
         </Route>
         <Route path="/about">
           <About />
         </Route>
         <Route path="/dashboard">
           <Dashboard />
+        </Route>
+        <Route path="/everyone">
+          <Everyone />
         </Route>
       </Switch>
   </Router>

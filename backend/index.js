@@ -7,7 +7,11 @@ const jsonParser = bodyParser.json();
 
 dbo.connectToServer();
 
+// Ce code va en haut de votre fichier index.js, dans vos requires
+var cors = require('cors')
 
+//celui-ci après la déclaration de la variable app
+app.use(cors())
 
 
 /*
@@ -95,10 +99,14 @@ app.post('/pokepo/updateParti', jsonParser, (req, res) => {
 app.post('/polidex/insert', jsonParser, (req, res) => {
   const dbConnect = dbo.getDb();
   const body = req.body;
-  console.log('Got body:', body);
-  toImport = dbConnect.collection("pokepo").findOne({name:body.name});
-  console.log(toImport)
-  //dbConnect.collection("polidex").insertOne(toImport)
+  console.log('Got body:', body)
+  toImport = () => dbConnect.collection("pokepo").find({name:"Emmanuel Macron"}).toArray(function(err, result){
+    if (err){console.log("niksamer")}
+    
+  }); console.log(toImport, "rr")
+  const toImport = dbConnect.collection("pokepo").findOne({name:body.name})//.then(
+    //() => console.log(toImport), console.log("ggg")//(toImport)=>dbConnect.collection("polidex").insertOne(toImport)
+  //);
   res.json(body);
 });
 
