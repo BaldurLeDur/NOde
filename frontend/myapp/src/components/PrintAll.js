@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import AddToPokedex from "../api/AddToPokedex";
 import { getAll } from "../api/Fetch";
+import Button from '../Bootstrap/Button';
 
 
 
-function PrintPoli(){
+function PrintAll(){
     const [ pokemons, setPokemons ] = useState([]);
     
 
@@ -14,12 +16,12 @@ function PrintPoli(){
             .catch(error=>console.error("Erreur avec notre API :",error.message));
     },[]);
     return <div className="pokemon-list">
-        <div class="flex">
+        <div>
         {
             pokemons.map((pokemon,key) =>{
                 return <div key={key} className="bloc-pokemon">
                     <h2>{pokemon.name}</h2>
-                    <button onClick={()=>AddToPokedex(pokemon._id)}>Capturer !</button>
+                    <Button variant ="success" onClick={()=>AddToPokedex(pokemon._id)}>Capturer !</Button>
                 </div>
             })
         }
@@ -27,4 +29,4 @@ function PrintPoli(){
     </div>;
 }
 
-export default PrintPoli;
+export default PrintAll;
