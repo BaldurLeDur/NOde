@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AddToPokedex from "../api/AddToPokedex";
 import { getAll } from "../api/Fetch";
-import Button from '../node_modules/bootstrap/js/src/button';
+//import Button from '../node_modules/bootstrap/js/src/button';
 
 
 
