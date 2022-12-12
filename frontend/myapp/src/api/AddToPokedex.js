@@ -6,9 +6,10 @@ function AddToPokedex(id){
                 'Accept': 'application/json', 
                 'Content-Type':'application/json'
             },
-            body: {
-                
-            }
+            body: JSON.stringify({
+                name:id.name,
+                parti:id.parti
+            })
         }
     )
 }

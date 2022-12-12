@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AddToPokedex from "../api/AddToPokedex";
 import { getAll } from "../api/Fetch";
-import Button from '../Bootstrap/Button';
+import Button from '../node_modules/bootstrap/js/src/button';
 
 
 
@@ -21,7 +21,7 @@ function PrintAll(){
             pokemons.map((pokemon,key) =>{
                 return <div key={key} className="bloc-pokemon">
                     <h2>{pokemon.name}</h2>
-                    <Button variant ="success" onClick={()=>AddToPokedex(pokemon._id)}>Capturer !</Button>
+                    <Button variant ="success" onClick={()=>AddToPokedex(pokemon)}>Capturer !</Button>
                 </div>
             })
         }

@@ -6,9 +6,9 @@ function RemoveFromPokedex(id){
                 'Accept': 'application/json', 
                 'Content-Type':'application/json'
             },
-            body: {
-                name:"test"
-            }
+            body: JSON.stringify({
+                name:id.name
+            })
         }
     )
 }

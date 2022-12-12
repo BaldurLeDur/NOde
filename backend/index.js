@@ -112,18 +112,28 @@ app.post('/pokepo/updateParti', jsonParser, (req, res) => {
 });*/}
 
 
-app.post('/polidex/insert', jsonParser, (req, res) => {
+{/*app.post('/polidex/insert', jsonParser, (req, res) => {
   const body=req.body;
   const dbconnect=dbo.getDb();
   dbconnect.collection("pokepo").findOne({_id:ObjectId(body._id)})
   .then(function(error, result){
     if(error){res.json(body)};
     {dbconnect.collection("polidex").insertOne(result),
-    {/*, {forceServerObjectId: false}*/},
+    {//, {forceServerObjectId: false}},
     console.log("ojuonbcb"),
   res.json({body})}
 })
-})
+})*/}
+
+
+//ajouter un pokemon
+app.post('/polidex/insert', jsonParser, (req, res) => {
+  const dbConnect = dbo.getDb();
+  const body = req.body;
+  console.log('Got body:', body);
+  dbConnect.collection("polidex").insertOne(body)
+  res.json(body);
+});
 
 
 //afficher le polidex
